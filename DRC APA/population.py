@@ -17,10 +17,10 @@ print('Number of Provinces:', len(pop))
 print("\nList Of Provinces:\n", pop.index)
 
 #getting the population total pop for each province
-print("Population in each Province",pop['Pop_2020'])
-print("Total Population of DRC (2020)",pop['Pop_2020'].sum())
+print("\nPopulation in each Province\n",pop['Pop_2020'])
+print("Total Population of DRC (2020):",pop['Pop_2020'].sum())
 
-#%%getting the amount of people returning back to provinces
+#%%getting the amount of people displaced in provinces
 con = pd.read_excel('rdc_mouvement_de_population_deplace_octobre_2021.xlsx')
 con = con.rename( columns={'creation_date':'date','admin1_label':'province'} )
 
@@ -30,22 +30,19 @@ con["date"] = ymd.dt.to_period("Y")
 year_ok = ymd.dt.year <= 2021
 dates = con[year_ok==True]
 fight = dates
+
 #dropping columns with other dates not needed due to using the date based off creation of the report since it is already evaulated to be in dataset
 fight = fight.drop(columns='evaluation_date')
 fight = fight.drop(columns='movement_date')
 con_prov = fight['person'].groupby(fight['province'])
-print("Internally displaced people by province:",con_prov.sum())
+print("\nInternally displaced people by province:\n",con_prov.sum())
 tight = con_prov.sum()
 #this figure does not include displaced people before 2019 that was about 2.9 million people
 print("Total displaced people in DRC from 2019 to 2020:",fight['person'].sum())
-#getting new csv file without 2021 dates to use for gis layer
-tight.to_csv('conflict.csv')
-use = pd.read_csv("conflict.csv")
 
 
-
-#%%
-
+#%%Creating the figures to display the displaced people
+#seperating out provinces with lowest numbers to get a better scale for the y axis
 in_group = fight['province'].isin(['Maniema','Haut-uele','Nord-kivu'])
 subset = fight[ in_group ].sort_values('person')
 
@@ -61,6 +58,7 @@ fig.savefig('conflict.png')
 out_group = fight['province'].isin(['Maniema','Haut-uele','Nord-kivu'])==False
 subset2 = fight[ out_group ].sort_values('person')
 
+#using the remainder of the highest values
 fig, ax1 = plt.subplots()
 sns.barplot(data=subset2,x='province',y='person',ax=ax1)
 plt.xticks(rotation = 45)

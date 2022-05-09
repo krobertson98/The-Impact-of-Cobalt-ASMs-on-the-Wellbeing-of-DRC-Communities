@@ -36,19 +36,23 @@ pover = pd.read_csv("pro_pov.csv")
 groupedvalues=pover.groupby('province').sum().reset_index()
 #uploading previously made file to identify  provinces that have mines in them
 minespr = pd.read_csv("minesprov.csv")
+#seperating the provinces from those that have mines vs the ones that do not have any
 in_group = groupedvalues['province'].isin(['Haut-Uélé', 'Sud-Kivu', 'Tanganyika', 'Ituri', 'Lualaba', 'Haut-Katanga', 'Nord Kivu'])
 subset = groupedvalues[ in_group ].sort_values('poverty')
 out_group =groupedvalues['province'].isin(['Haut-Uélé', 'Sud-Kivu', 'Tanganyika', 'Ituri', 'Lualaba', 'Haut-Katanga', 'Nord Kivu'])== False
 seperate = groupedvalues[ out_group ].sort_values('poverty')
+
 print(list(seperate['province']))
+
 small_group = seperate['province'].isin(['Kinshasa', 'Kongo Central', 'Tshopo', 'Équateur', 'Mai-Ndombe', 'Bas-Uélé', 'Lomami', 'Kasaï-Oriental', 'Haut-Lomami','Mongala', 'Sankuru'])
 subset2 =seperate[small_group]
 large_group = seperate['province'].isin(['Kinshasa', 'Kongo Central', 'Tshopo', 'Équateur', 'Mai-Ndombe', 'Bas-Uélé', 'Lomami', 'Kasaï-Oriental', 'Haut-Lomami','Mongala', 'Sankuru'])==False
+
 subset3 = seperate[large_group]
 #looking at the two provinces with Cobalt mines
 cobalt = groupedvalues['province'].isin(['Lualaba', 'Haut-Katanga'])
 subset4 = groupedvalues[ cobalt ].sort_values('poverty')
-#%%making a figure to display severe poverty by province for mining provinces
+#%%making a figure to display severe poverty by province for mining provinces seperated by mining, nonminig, cobalt
 fig, ax1 = plt.subplots()
 sns.barplot(data=subset,x='province',y='pro_pov',ax=ax1)
 plt.xticks(rotation = 45)
@@ -85,6 +89,8 @@ ax1.set_ylabel("Amount of people in Poverty")
 fig.tight_layout()
 fig.savefig('pov_cobalt.png')
 
+#getting the average severe poverty number to compare those without and with mines
+#this method does not necessarily suggest a causation but does give a correlation to see if the presence of mines effect 
 mines_mean = round(subset['pro_pov'].mean(axis=0),2)
 print("Mean of People in Severe poverty where there are mines:",mines_mean)
 
