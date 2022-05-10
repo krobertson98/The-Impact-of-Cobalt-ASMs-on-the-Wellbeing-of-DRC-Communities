@@ -14,7 +14,7 @@ pop =  pd.read_csv('cod_admpop_adm1.csv')
 pop = pop.rename( columns={'admin1Name_fr':'province'} )
 pop = pop.set_index("province")
 print('Number of Provinces:', len(pop))
-print("\nList Of Provinces:\n", pop.index)
+print("\nList Of Provinces:\n", pop.index.sort_values())
 
 #getting the population total pop for each province
 print("\nPopulation in each Province\n",pop['Pop_2020'])
