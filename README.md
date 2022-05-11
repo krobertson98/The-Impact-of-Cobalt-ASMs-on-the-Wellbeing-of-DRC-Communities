@@ -1,8 +1,8 @@
 # The-Impact-of-Cobalt-Mines-on-the-Wellbeing-of-DRC-Communties
-
-## Scripts use in order:
 ## Purpose:
 <p>Climate change is an increasing threat to the world and countries are taking steps in hopes to reduce the number of carbon emissions. This includes switching to using electric vehicles and renewable energy sources such as solar and wind. These energy sources all require the use of cobalt in their battery cells. The majority of the cobalt in the world is in the Democratic Republic of Congo (DRC). There is a great concern that the mining of these minerals for global gain will negatively impact the economies, environmental health, and human health of the region. The DRC also has a heavy use of artisanal small mines that are illegal zones where people independently mine with no oversight. These sites are notorious for child labor, gender-based violence, and environmental damage. This project focuses on cobalt artisanal small mines (ASMs) as the country is exploring ways to formalize these zones so that they may still be an economic source for local communities while reducing the dangers they present. This analysis will explore if this policy should be pursued or if it does not have enough economic benefits for the communities to justify formalization.<p>
+## Scripts use in order:
+
 **<p>1.collect.py<p>**
 <p>sources: cod_mines_curated_all_opendata_p_ipis.csv from https://ipisresearch.be/fr/publication/ipis-open-data-dashboard-on-the-artisanal-and-small-scale-mining-sector-in-eastern-drc/<p>
 <p>Using the cod_mines_curated_all_opendata_p_ipis.csv to get out the provinces that have artisanal small mines located in them. Using the data only from 2020 for a comparison that can be used across the different scripts. The data will be trimmed to only 2020 producing dates.csv. After trimming the data based on year, the provinces will be trimmed to the ones only containing artisanal small mines. Saving this information into a csv called minesprov.csv for future use in other scripts.<p>
